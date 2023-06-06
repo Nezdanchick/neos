@@ -15,6 +15,11 @@ OUTDIR=bin
 
 include uefi/Makefile
 
+# shortcuts:
+b: build;
+r: run;
+d: deploy;
+
 build: all
 	@dd if=/dev/zero of=$(FLOPPY) bs=1k count=1440 status=none
 	@mformat -i $(FLOPPY) -f 1440
@@ -24,7 +29,8 @@ build: all
 	@echo $(NAME) image created successfully in $(FLOPPY)
 
 run: build
-	@echo running $(NAME) $(ARCH)
+	@read -sp "Press Enter to run $(NAME)"
+	@printf "\nrunning $(NAME) $(ARCH)"
 	@qemu-system-$(ARCH) \
 	-drive file=$(FLOPPY),format=raw,if=none,id=floppy \
 	-device virtio-blk-pci,drive=floppy,bootindex=0 \
@@ -39,7 +45,7 @@ run: build
 	@echo $(LOG_FILE):
 	@make log
 
-deploy: clean build
+deploy: clean-all build
 	@echo trying to deploy to device $(DEPLOY_DEVICE):
 	@sudo fdisk -l $(DEPLOY_DEVICE)
 	@sudo -k dd if=$(FLOPPY) of=$(DEPLOY_DEVICE)
@@ -47,3 +53,6 @@ deploy: clean build
 
 log:
 	@./utils/format $(LOG_FILE)
+
+clean-all: clean
+	@rm -f $(LOG_FILE)
