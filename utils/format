@@ -1,0 +1,17 @@
+#!/bin/python
+import sys
+import os
+
+eof = "[01;01H"
+path = sys.argv[1]
+log = open(path, 'r+')
+text = log.read()
+offset = text.rindex(eof) + len(eof)
+
+formatted = text[offset:].rstrip()
+print(formatted)
+
+log.seek(0)
+log.truncate(0)
+log.write(formatted)
+log.close()

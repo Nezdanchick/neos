@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "command": "make run && exit",
+            "name": "run",
+            "request": "launch",
+            "type": "node-terminal"
+        },
+        {
+            "command": "make build",
+            "name": "build",
+            "request": "launch",
+            "type": "node-terminal"
+        },
+        {
+            "command": "make deploy",
+            "name": "deploy",
+            "request": "launch",
+            "type": "node-terminal"
+        },
+    ]
+}
