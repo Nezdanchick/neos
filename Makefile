@@ -40,7 +40,7 @@ run: build
 	@make log
 
 deploy: clean build
-	@echo trying tto deploy to device $(DEPLOY_DEVICE):
+	@echo trying to deploy to device $(DEPLOY_DEVICE):
 	@sudo fdisk -l $(DEPLOY_DEVICE)
 	@sudo -k dd if=$(FLOPPY) of=$(DEPLOY_DEVICE)
 	@echo deploy to $(DEPLOY_DEVICE) finished successfully
